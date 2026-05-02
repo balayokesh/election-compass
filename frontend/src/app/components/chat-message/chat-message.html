@@ -1,0 +1,9 @@
+<div class="chat-message" *ngIf="message" [ngClass]="message.sender">
+  <div class="message-header">
+    <span class="sender-name">{{ message.senderName }}</span>
+    <span class="timestamp">{{ message.timestamp | date:'short' }}</span>
+  </div>
+  <div class="message-content">
+    {{ message.text }}
+  </div>
+</div>
