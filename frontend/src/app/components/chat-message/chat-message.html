@@ -1,9 +1,20 @@
-<div class="chat-message" *ngIf="message" [ngClass]="message.sender">
-  <div class="message-header">
-    <span class="sender-name">{{ message.senderName }}</span>
-    <span class="timestamp">{{ message.timestamp | date:'short' }}</span>
-  </div>
-  <div class="message-content">
-    {{ message.text }}
-  </div>
+<div class="chat-message-container" [ngClass]="message.sender">
+  <mat-card class="message-card" [ngClass]="message.sender">
+    <mat-card-header>
+      <div class="header-left">
+        <mat-icon [matTooltip]="getSenderColor()" class="sender-icon" [ngClass]="message.sender">
+          {{ getSenderIcon() }}
+        </mat-icon>
+        <div class="header-info">
+          <h3 class="sender-name">{{ message.senderName }}</h3>
+          <span class="timestamp" [matTooltip]="message.timestamp | date:'medium'">
+            {{ message.timestamp | date:'short' }}
+          </span>
+        </div>
+      </div>
+    </mat-card-header>
+    <mat-card-content>
+      <p class="message-text">{{ message.text }}</p>
+    </mat-card-content>
+  </mat-card>
 </div>

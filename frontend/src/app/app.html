@@ -1,3 +1,37 @@
-Hello, World!
-<app-chat-message [message]="currentMessage"></app-chat-message>
-<router-outlet />
+<div class="app-container">
+  <header class="app-header">
+    <div class="header-content">
+      <h1 class="app-title">Election Compass</h1>
+      <p class="app-subtitle">Your intelligent political guide</p>
+    </div>
+  </header>
+
+  <main class="chat-main">
+    <div class="chat-wrapper">
+      <div class="messages-container">
+        <div class="messages-list">
+          <app-chat-message 
+            *ngFor="let message of messages" 
+            [message]="message">
+          </app-chat-message>
+        </div>
+      </div>
+
+      <div class="input-container">
+        <div class="input-wrapper">
+          <input 
+            type="text" 
+            class="message-input" 
+            placeholder="Ask me anything about politics..."
+            (keyup.enter)="sendMessage(inputField.value)"
+            #inputField>
+          <button class="send-button" (click)="sendMessage(inputField.value)">
+            <mat-icon>send</mat-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <router-outlet></router-outlet>
+</div>
