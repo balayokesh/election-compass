@@ -5,6 +5,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { ChatMessage } from './components/chat-message/chat-message';
 import type { Message } from './components/chat-message/chat-message';
 import { DialogflowService } from './services/dialogflow';
+import { AuthService } from './services/auth';
 import { inject } from '@angular/core';
 
 @Component({
@@ -15,7 +16,10 @@ import { inject } from '@angular/core';
 })
 export class App {
   private readonly dialogflowService = inject(DialogflowService);
-  protected readonly title = signal('frontend');
+  private readonly authService = inject(AuthService);
+  
+  protected readonly title = signal('Election Compass');
+  readonly user$ = this.authService.user$;
   
   messages: Message[] = [
     {
@@ -78,5 +82,21 @@ export class App {
         console.error('Dialogflow Error:', err);
       }
     });
+  }
+
+  async login(): Promise<void> {
+    try {
+      await this.authService.loginWithGoogle();
+    } catch (err) {
+      console.error('Login error:', err);
+    }
+  }
+
+  async logout(): Promise<void> {
+    try {
+      await this.authService.logout();
+    } catch (err) {
+      console.error('Logout error:', err);
+    }
   }
 }

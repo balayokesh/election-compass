@@ -1,14 +1,23 @@
-<div class="app-container">
+<div class="app-container" *ngIf="user$ | async as user; else loginScreen">
   <header class="app-header">
     <div class="header-content">
       <h1 class="app-title">Election Compass</h1>
-      <p class="app-subtitle">Your intelligent political guide</p>
+      <p class="app-subtitle">Welcome, {{ user.displayName }}</p>
+    </div>
+    <div class="header-actions">
+      <button 
+        class="logout-button" 
+        (click)="logout()" 
+        aria-label="Logout from Election Compass">
+        <mat-icon>logout</mat-icon>
+        <span>Logout</span>
+      </button>
     </div>
   </header>
 
-  <main class="chat-main">
+  <main class="chat-main" aria-label="Political Chat Interface">
     <div class="chat-wrapper">
-      <div class="messages-container">
+      <div class="messages-container" #scrollContainer>
         <div class="messages-list">
           <app-chat-message 
             *ngFor="let message of messages" 
@@ -23,15 +32,40 @@
             type="text" 
             class="message-input" 
             placeholder="Ask me anything about politics..."
-            (keyup.enter)="sendMessage(inputField.value)"
+            aria-label="Enter your political question"
+            (keyup.enter)="sendMessage(inputField.value); inputField.value=''"
             #inputField>
-          <button class="send-button" (click)="sendMessage(inputField.value)">
+          <button 
+            class="send-button" 
+            (click)="sendMessage(inputField.value); inputField.value=''"
+            aria-label="Send message">
             <mat-icon>send</mat-icon>
           </button>
         </div>
       </div>
     </div>
   </main>
-
-  <router-outlet></router-outlet>
 </div>
+
+<ng-template #loginScreen>
+  <div class="login-container">
+    <section class="login-card" aria-labelledby="login-title">
+      <h1 id="login-title" class="app-title">Election Compass</h1>
+      <p class="app-subtitle">Your intelligent political guide</p>
+      
+      <div class="login-visual">
+        <mat-icon class="hero-icon">account_balance</mat-icon>
+      </div>
+
+      <button 
+        class="google-login-button" 
+        (click)="login()"
+        aria-label="Log in with your Google account">
+        <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="" aria-hidden="true">
+        <span>Continue with Google</span>
+      </button>
+      
+      <p class="login-footer">Secure, neutral, and data-driven insights.</p>
+    </section>
+  </div>
+</ng-template>

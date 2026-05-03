@@ -20,7 +20,13 @@ const auth = new GoogleAuth({
 
 const app = express();
 
-app.use(cors({ origin: ['http://localhost:4200', 'http://localhost:4300'] }));
+app.use(cors({ 
+  origin: [
+    'http://localhost:4200', 
+    'http://localhost:4300', 
+    'https://election-compass-frontend-71290505890.us-central1.run.app'
+  ] 
+}));
 app.use(express.json());
 
 // ---------------------------------------------------------------------------

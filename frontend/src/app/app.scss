@@ -9,28 +9,137 @@
 .app-header {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
-  padding: 2rem 1rem;
+  padding: 1.5rem 2rem;
   box-shadow: 0 4px 20px rgba(102, 126, 234, 0.3);
-  text-align: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 
   .header-content {
-    max-width: 1200px;
-    margin: 0 auto;
+    text-align: left;
   }
 
   .app-title {
     margin: 0;
-    font-size: 2.5rem;
+    font-size: 2rem;
     font-weight: 700;
     letter-spacing: -0.5px;
   }
 
   .app-subtitle {
-    margin: 0.5rem 0 0 0;
-    font-size: 1rem;
+    margin: 0.25rem 0 0 0;
+    font-size: 0.9rem;
     opacity: 0.95;
     font-weight: 300;
   }
+}
+
+.logout-button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1.25rem;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s ease;
+
+  &:hover, &:focus {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.6);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.1);
+  }
+
+  mat-icon {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+  }
+}
+
+.login-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 2rem;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+}
+
+.login-card {
+  width: 100%;
+  max-width: 400px;
+  padding: 3rem 2rem;
+  background: white;
+  border-radius: 24px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+  text-align: center;
+
+  .app-title {
+    color: #1a202c;
+    margin-bottom: 0.5rem;
+  }
+
+  .app-subtitle {
+    color: #718096;
+    margin-bottom: 2.5rem;
+  }
+}
+
+.login-visual {
+  margin-bottom: 2.5rem;
+  
+  .hero-icon {
+    font-size: 80px;
+    width: 80px;
+    height: 80px;
+    color: #667eea;
+    opacity: 0.8;
+  }
+}
+
+.google-login-button {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 0.875rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  background: white;
+  color: #4a5568;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+
+  &:hover, &:focus {
+    background: #f8fafc;
+    border-color: #cbd5e0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    outline: none;
+  }
+
+  &:focus {
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+  }
+
+  img {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+.login-footer {
+  margin-top: 2rem;
+  font-size: 0.85rem;
+  color: #a0aec0;
 }
 
 .chat-main {
@@ -155,14 +264,14 @@
 /* Responsive Design */
 @media (max-width: 768px) {
   .app-header {
-    padding: 1.5rem 1rem;
+    padding: 1rem 1.5rem;
 
     .app-title {
-      font-size: 1.75rem;
+      font-size: 1.5rem;
     }
 
     .app-subtitle {
-      font-size: 0.9rem;
+      display: none;
     }
   }
 
@@ -189,16 +298,8 @@
 }
 
 @media (max-width: 480px) {
-  .app-header {
-    padding: 1rem;
-
-    .app-title {
-      font-size: 1.5rem;
-    }
-
-    .app-subtitle {
-      font-size: 0.85rem;
-    }
+  .login-card {
+    padding: 2rem 1.5rem;
   }
 
   .chat-wrapper {
