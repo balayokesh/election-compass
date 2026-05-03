@@ -18,7 +18,13 @@
   <main class="chat-main" aria-label="Political Chat Interface">
     <div class="chat-wrapper">
       <div class="messages-container" #scrollContainer>
-        <div class="messages-list">
+        <div
+          class="messages-list"
+          role="log"
+          aria-live="polite"
+          aria-relevant="additions text"
+          aria-label="Conversation messages"
+        >
           <app-chat-message 
             *ngFor="let message of messages" 
             [message]="message">
@@ -27,21 +33,25 @@
       </div>
 
       <div class="input-container">
-        <div class="input-wrapper">
+        <form
+          class="input-wrapper"
+          (submit)="sendMessage(inputField.value); inputField.value=''; inputField.focus()"
+        >
+          <label for="message-input" class="sr-only">Type your political question</label>
           <input 
+            id="message-input"
             type="text" 
             class="message-input" 
             placeholder="Ask me anything about politics..."
             aria-label="Enter your political question"
-            (keyup.enter)="sendMessage(inputField.value); inputField.value=''"
             #inputField>
           <button 
+            type="submit"
             class="send-button" 
-            (click)="sendMessage(inputField.value); inputField.value=''"
             aria-label="Send message">
-            <mat-icon>send</mat-icon>
+            <mat-icon aria-hidden="true">send</mat-icon>
           </button>
-        </div>
+        </form>
       </div>
     </div>
   </main>
@@ -58,6 +68,7 @@
       </div>
 
       <button 
+        type="button"
         class="google-login-button" 
         (click)="login()"
         aria-label="Log in with your Google account">

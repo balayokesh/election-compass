@@ -1,15 +1,19 @@
-<div class="chat-message-container" [ngClass]="message.sender">
+<div class="chat-message-container" [ngClass]="message.sender" role="listitem">
   <mat-card class="message-card" [ngClass]="message.sender">
     <mat-card-header>
       <div class="header-left">
-        <mat-icon [matTooltip]="getSenderColor()" class="sender-icon" [ngClass]="message.sender">
+        <mat-icon class="sender-icon" [ngClass]="message.sender" aria-hidden="true">
           {{ getSenderIcon() }}
         </mat-icon>
         <div class="header-info">
           <h3 class="sender-name">{{ message.senderName }}</h3>
-          <span class="timestamp" [matTooltip]="message.timestamp | date:'medium'">
+          <time
+            class="timestamp"
+            [attr.datetime]="message.timestamp.toISOString()"
+            [matTooltip]="message.timestamp | date:'medium'"
+          >
             {{ message.timestamp | date:'short' }}
-          </span>
+          </time>
         </div>
       </div>
     </mat-card-header>

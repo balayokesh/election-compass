@@ -47,11 +47,15 @@
   font-weight: 500;
   transition: all 0.2s ease;
 
-  &:hover, &:focus {
+  &:hover {
     background: rgba(255, 255, 255, 0.2);
     border-color: rgba(255, 255, 255, 0.6);
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.1);
+  }
+
+  &:focus-visible {
+    outline: 3px solid #ffffff;
+    outline-offset: 2px;
+    box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.5);
   }
 
   mat-icon {
@@ -119,15 +123,16 @@
   transition: all 0.2s ease;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 
-  &:hover, &:focus {
+  &:hover {
     background: #f8fafc;
     border-color: #cbd5e0;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-    outline: none;
   }
 
-  &:focus {
-    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+  &:focus-visible {
+    outline: 3px solid #1d4ed8;
+    outline-offset: 2px;
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.25);
   }
 
   img {
@@ -214,8 +219,6 @@
   font-size: 0.95rem;
   font-family: 'Roboto', sans-serif;
   transition: all 0.3s ease;
-  outline: none;
-
   &:hover {
     border-color: #cbd5e0;
   }
@@ -254,11 +257,29 @@
     transform: scale(0.95);
   }
 
+  &:focus-visible {
+    outline: 3px solid #1d4ed8;
+    outline-offset: 2px;
+    box-shadow: 0 0 0 5px rgba(59, 130, 246, 0.3);
+  }
+
   mat-icon {
     font-size: 20px;
     width: 20px;
     height: 20px;
   }
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 /* Responsive Design */

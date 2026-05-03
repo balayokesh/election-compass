@@ -13,6 +13,13 @@ describe('ChatMessage', () => {
 
     fixture = TestBed.createComponent(ChatMessage);
     component = fixture.componentInstance;
+    component.message = {
+      id: 'test-1',
+      text: 'Test message',
+      sender: 'ai',
+      senderName: 'Election Compass',
+      timestamp: new Date(),
+    };
     await fixture.whenStable();
     fixture.detectChanges();
   });

@@ -127,6 +127,16 @@ mat-card-content {
   }
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .chat-message-container {
+    animation: none;
+  }
+
+  .message-card {
+    transition: none;
+  }
+}
+
 @media (max-width: 768px) {
   .message-card {
     max-width: 85%;

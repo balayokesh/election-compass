@@ -34,16 +34,4 @@ export class ChatMessage {
     }
   }
 
-  getSenderColor(): string {
-    switch (this.message?.sender) {
-      case 'user':
-        return 'primary';
-      case 'ai':
-        return 'accent';
-      case 'system':
-        return 'warn';
-      default:
-        return 'primary';
-    }
-  }
 }
