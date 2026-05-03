@@ -4,6 +4,8 @@ import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { ChatMessage } from './components/chat-message/chat-message';
 import type { Message } from './components/chat-message/chat-message';
+import { DialogflowService } from './services/dialogflow';
+import { inject } from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -12,6 +14,7 @@ import type { Message } from './components/chat-message/chat-message';
   styleUrl: './app.scss'
 })
 export class App {
+  private readonly dialogflowService = inject(DialogflowService);
   protected readonly title = signal('frontend');
   
   messages: Message[] = [
@@ -51,16 +54,29 @@ export class App {
     
     this.messages.push(userMessage);
     
-    // Simulate AI response
-    setTimeout(() => {
-      const aiMessage: Message = {
-        id: (Date.now() + 1).toString(),
-        text: 'This is a simulated response. Connect this to your backend API.',
-        sender: 'ai',
-        senderName: 'Election Compass',
-        timestamp: new Date()
-      };
-      this.messages.push(aiMessage);
-    }, 500);
+    // Call Dialogflow via backend proxy (auth handled server-side)
+    this.dialogflowService.sendQuery(text.trim()).subscribe({
+      next: (reply) => {
+        const aiMessage: Message = {
+          id: Date.now().toString(),
+          text: reply.fulfillmentText,
+          sender: 'ai',
+          senderName: 'Election Compass',
+          timestamp: new Date()
+        };
+        this.messages.push(aiMessage);
+      },
+      error: (err) => {
+        const errorMessage: Message = {
+          id: Date.now().toString(),
+          text: 'Sorry, I encountered an error. Please check your configuration.',
+          sender: 'ai',
+          senderName: 'System',
+          timestamp: new Date()
+        };
+        this.messages.push(errorMessage);
+        console.error('Dialogflow Error:', err);
+      }
+    });
   }
 }
