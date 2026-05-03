@@ -1,6 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting, HttpTestingController } from '@angular/common/http/testing';
+import { Auth } from '@angular/fire/auth';
 import { DialogflowService } from './dialogflow';
 import { environment } from '../../environments/environment';
 import { describe, it, expect, beforeEach, afterEach } from 'vitest';
@@ -8,6 +9,9 @@ import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 describe('DialogflowService', () => {
   let service: DialogflowService;
   let httpMock: HttpTestingController;
+  const authMock = {
+    currentUser: null,
+  } as unknown as Auth;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -15,6 +19,7 @@ describe('DialogflowService', () => {
         DialogflowService,
         provideHttpClient(),
         provideHttpClientTesting(),
+        { provide: Auth, useValue: authMock },
       ]
     });
     service = TestBed.inject(DialogflowService);
@@ -29,7 +34,7 @@ describe('DialogflowService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should send a POST request to the proxyUrl', () => {
+  it('should send a POST request to the proxyUrl', async () => {
     const mockResponse = {
       responseId: '123',
       queryResult: { 
@@ -46,6 +51,8 @@ describe('DialogflowService', () => {
       expect(response.fulfillmentText).toEqual('Hello from Dialogflow');
       expect(response.intent).toEqual('Default Welcome Intent');
     });
+
+    await Promise.resolve();
 
     const req = httpMock.expectOne(environment.dialogflow.proxyUrl);
     expect(req.request.method).toBe('POST');

@@ -1,7 +1,9 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
+import { HttpHeaders } from '@angular/common/http';
+import { Auth } from '@angular/fire/auth';
+import { Observable, throwError, from } from 'rxjs';
+import { map, catchError, switchMap } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 
 // ---------------------------------------------------------------------------
@@ -59,6 +61,7 @@ export interface DialogflowReply {
 })
 export class DialogflowService {
   private readonly http = inject(HttpClient);
+  private readonly auth = inject(Auth);
 
   /**
    * Session ID — kept stable for the lifetime of the service instance so the
@@ -82,15 +85,18 @@ export class DialogflowService {
       sessionId: this.sessionId,
     };
 
-    return this.http
-      .post<DialogflowDetectIntentResponse>(PROXY_URL, body)
-      .pipe(
-        map((response) => this.mapResponse(response)),
-        catchError((err) => {
-          console.error('[DialogflowService] detectIntent failed', err);
-          return throwError(() => err);
+    return from(this.buildHeaders()).pipe(
+      switchMap((headers) =>
+        this.http.post<DialogflowDetectIntentResponse>(PROXY_URL, body, {
+          headers,
         }),
-      );
+      ),
+      map((response) => this.mapResponse(response)),
+      catchError((err) => {
+        console.error('[DialogflowService] detectIntent failed', err);
+        return throwError(() => err);
+      }),
+    );
   }
 
   // ---------------------------------------------------------------------------
@@ -116,5 +122,17 @@ export class DialogflowService {
       confidence: queryResult.intentDetectionConfidence ?? 0,
       raw: response,
     };
+  }
+
+  private async buildHeaders(): Promise<HttpHeaders> {
+    const currentUser = this.auth.currentUser;
+    if (!currentUser) {
+      return new HttpHeaders();
+    }
+
+    const idToken = await currentUser.getIdToken();
+    return new HttpHeaders({
+      Authorization: `Bearer ${idToken}`,
+    });
   }
 }

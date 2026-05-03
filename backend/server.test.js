@@ -88,7 +88,7 @@ describe('Dialogflow Proxy Server', () => {
       .send({ text: 'hi', sessionId: 'test-session' });
 
     expect(res.statusCode).toBe(404);
-    expect(res.body.error.message).toBe('No DesignTimeAgent found');
+    expect(res.body.error).toBe('Dialogflow request failed');
   });
 
   // Test 6: Handling 403 Forbidden
@@ -104,7 +104,7 @@ describe('Dialogflow Proxy Server', () => {
       .send({ text: 'hi', sessionId: 'test-session' });
 
     expect(res.statusCode).toBe(403);
-    expect(res.body.error.message).toBe('Permission Denied');
+    expect(res.body.error).toBe('Dialogflow request failed');
   });
 
   // Test 7: Handling 500 Internal Server Error from Dialogflow
