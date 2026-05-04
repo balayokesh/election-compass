@@ -1,8 +1,0 @@
-node_modules
-npm-debug.log
-.gitignore
-Dockerfile
-server.test.js
-jest.config.js
-.vscode
-.git
