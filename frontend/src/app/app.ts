@@ -1,5 +1,4 @@
 import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { ChatMessage } from './components/chat-message/chat-message';
@@ -10,17 +9,17 @@ import { inject } from '@angular/core';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, ChatMessage, CommonModule, MatIconModule],
+  imports: [ChatMessage, CommonModule, MatIconModule],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
 export class App {
   private readonly dialogflowService = inject(DialogflowService);
   private readonly authService = inject(AuthService);
-  
+
   protected readonly title = signal('Election Compass');
   readonly user$ = this.authService.user$;
-  
+
   messages: Message[] = [
     {
       id: '1',
@@ -47,7 +46,7 @@ export class App {
 
   sendMessage(text: string): void {
     if (!text.trim()) return;
-    
+
     const userMessage: Message = {
       id: Date.now().toString(),
       text: text.trim(),
@@ -55,9 +54,9 @@ export class App {
       senderName: 'You',
       timestamp: new Date()
     };
-    
+
     this.messages.push(userMessage);
-    
+
     // Call Dialogflow via backend proxy (auth handled server-side)
     this.dialogflowService.sendQuery(text.trim()).subscribe({
       next: (reply) => {
