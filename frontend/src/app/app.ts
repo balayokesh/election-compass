@@ -40,7 +40,7 @@ export class App {
       text: 'Absolutely! The major political parties typically differ on issues such as healthcare, taxation, education, and environmental policy. Would you like me to dive deeper into any specific topic?',
       sender: 'ai',
       senderName: 'Election Compass',
-      timestamp: new Date(Date.now() - 1 * 60000)
+      timestamp: new Date(Date.now() - 60000)
     }
   ];
 
